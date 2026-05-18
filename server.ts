@@ -13,14 +13,20 @@ async function startServer() {
   app.use(express.json());
 
   // Gemini Setup
-  const ai = new GoogleGenAI({ 
-    apiKey: process.env.GEMINI_API_KEY,
-    httpOptions: {
-      headers: {
-        'User-Agent': 'aistudio-build',
+  let ai: GoogleGenAI | undefined;
+  if (process.env.GEMINI_API_KEY) {
+    ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        }
       }
-    }
-  });
+    });
+  } else {
+    console.warn("GEMINI_API_KEY not set. AI recommendations will be disabled.");
+  }
+
 
   // API Routes
   app.get("/api/health", (req, res) => {
@@ -29,6 +35,9 @@ async function startServer() {
 
   // AI Recommendations Endpoint
   app.post("/api/recommendations", async (req, res) => {
+    if (!ai) {
+      return res.status(503).json({ error: "AI service is unavailable. Make sure to set the GEMINI_API_KEY." });
+    }
     try {
       const { items } = req.body;
       const prompt = `Based on these items in the cart: ${items.map((i: any) => i.name).join(", ")}, recommend 3 other food items that would pair well with them. Return as a short JSON list of objects with 'name' and 'reason'.`;
