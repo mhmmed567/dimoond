@@ -52,9 +52,6 @@ export default function Splash() {
           <h1 className="text-3xl font-serif text-[#faf7f2] mb-2 tracking-tight">
             {settings.storeName}
           </h1>
-          <p className="text-[#c07446] text-[10px] font-bold tracking-[0.3em] uppercase mb-12">
-           Diamond  | ديـمـونـد 
-          </p>
         </motion.div>
 
         <div className="flex flex-col items-center gap-4">
