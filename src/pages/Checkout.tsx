@@ -32,7 +32,7 @@ export default function Checkout() {
         })),
         total,
         paymentMethod,
-        status: 'pending',
+        status: 'confirmed',
       });
 
       navigate('/confirmation', { state: { orderPlaced: true, orderId } });
