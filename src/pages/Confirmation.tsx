@@ -68,7 +68,7 @@ export default function Confirmation() {
               transition={{ delay: 0.4 }}
               className="bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 p-10 mb-8 shadow-2xl"
             >
-              <p className="text-[#faf7f2]/30 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">كود الطلب الخاص بك</p>
+              <p className="text-[#faf7f2]/30 text-[10px] font-bold uppercase tracking-[0.3em] mb-4"></p>
               <p className="text-6xl font-serif font-bold text-[#faf7f2] tracking-widest break-all" dir="ltr">
                 {orderNumber}
               </p>
@@ -101,7 +101,7 @@ export default function Confirmation() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.9 }}
-              href="https://www.instagram.com/your-instagram-handle" // Replace with your Instagram handle
+              href="https://www.instagram.com/dimond_om/?hl=ar" // Replace with your Instagram handle
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 text-[#faf7f2]/60 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest py-4 rounded-2xl border border-white/5 hover:bg-white/5 transition-all"
