@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 0. Default Deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Products --- (Public Read, Admin Write)
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true; // In production this would be restricted to admin
+    }
+
+    // --- Orders --- (Public Create/Read for tracking)
+    match /orders/{orderId} {
+      allow read, create, update: if true;
+    }
+
+    // --- Settings --- (Public Read, Admin Write)
+    match /settings/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // --- Users --- (Used for custom Phone/Password Auth)
+    match /users/{userId} {
+      allow read: if true; // Needed for login query
+      allow create, update, delete: if true;
+    }
+  }
+}

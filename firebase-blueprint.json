@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A menu item available for purchase",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "price": { "type": "number" },
+        "image": { "type": "string" },
+        "category": { "type": "string", "enum": ["coffee", "cold", "dessert", "extras"] },
+        "available": { "type": "boolean" }
+      },
+      "required": ["name", "nameEn", "price", "category", "available"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": { "type": "string" },
+              "quantity": { "type": "number" },
+              "price": { "type": "number" },
+              "name": { "type": "string" }
+            }
+          }
+        },
+        "total": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "preparing", "ready", "delivered"] },
+        "paymentMethod": { "type": "string", "enum": ["cash", "card"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["items", "total", "status", "paymentMethod", "createdAt"]
+    },
+    "AppSettings": {
+      "title": "App Settings",
+      "description": "Global application configuration",
+      "type": "object",
+      "properties": {
+        "logoUrl": { "type": "string" },
+        "storeName": { "type": "string" }
+      },
+      "required": ["logoUrl", "storeName"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile with role",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "staff", "customer"] }
+      },
+      "required": ["role"]
+    }
+  },
+  "firestore": {
+    "products": {
+      "schema": "Product",
+      "description": "Collection of menu items"
+    },
+    "orders": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    },
+    "settings": {
+      "schema": "AppSettings",
+      "description": "Global settings (usually a single document named 'global')"
+    },
+    "users": {
+      "schema": "User",
+      "description": "User roles and metadata"
+    }
+  }
+}
