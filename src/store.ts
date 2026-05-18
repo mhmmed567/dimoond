@@ -59,7 +59,7 @@ export const useStore = create<AppState>()(
       // Settings
       settings: {
         logoUrl: 'https://firebasestorage.googleapis.com/v0/b/diamond-coffee-80415.appspot.com/o/Diamond%20Logo.jpg?alt=media&token=e9e8e9e8-e9e8-e9e8-e9e8-e9e8e9e8e9e8',
-        storeName: 'ديـمـونـد كـوفـي - عُـمـان'
+        storeName: 'ديـمـونـد'
       },
       updateSettings: async (newSettings) => {
         try {
