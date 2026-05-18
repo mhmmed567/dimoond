@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../store';
 import { motion } from 'motion/react';
-import { Check, Home, Clock, Sparkles, MessageCircle } from 'lucide-react';
+import { Check, Home, Clock, Sparkles, MessageCircle, Instagram } from 'lucide-react';
 
 export default function Confirmation() {
   const navigate = useNavigate();
@@ -101,13 +101,25 @@ export default function Confirmation() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.9 }}
+              href="https://www.instagram.com/your-instagram-handle" // Replace with your Instagram handle
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 text-[#faf7f2]/60 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest py-4 rounded-2xl border border-white/5 hover:bg-white/5 transition-all"
+            >
+              <Instagram className="w-4 h-4" />
+              <span>تابعنا على انستجرام</span>
+            </motion.a>
+            <motion.a
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 1.0 }}
               href="https://wa.me/96800000000" // Replace with real Omani number
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 text-[#faf7f2]/60 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest py-4 rounded-2xl border border-white/5 hover:bg-white/5 transition-all"
             >
               <MessageCircle className="w-4 h-4 text-emerald-500" />
-              تواصل معنا عبر واتساب
+              <span>تواصل معنا عبر واتساب</span>
             </motion.a>
           </div>
         </motion.div>

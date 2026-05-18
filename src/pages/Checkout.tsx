@@ -13,6 +13,7 @@ export default function Checkout() {
   const [carPlate, setCarPlate] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cash');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isReviewing, setIsReviewing] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -40,6 +41,13 @@ export default function Checkout() {
       alert('حدث خطأ أثناء إتمام الطلب. يرجى المحاولة مرة أخرى.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+  
+  const handleReview = (e: FormEvent) => {
+    e.preventDefault();
+    if (isValid) {
+      setIsReviewing(true);
     }
   };
 
@@ -102,7 +110,7 @@ export default function Checkout() {
         </motion.div>
 
         {/* Input Form */}
-        <div className="space-y-6">
+        <fieldset disabled={isReviewing} className="space-y-6">
           <div className="luxury-card p-8">
             <label className="flex items-center gap-3 font-serif font-bold text-[#2a1810] text-lg mb-6">
               <Phone className="w-5 h-5 text-[#c07446]" />
@@ -175,37 +183,73 @@ export default function Checkout() {
               </motion.button>
             </div>
           </div>
-        </div>
+        </fieldset>
       </main>
 
       {/* Floating Action Bar */}
       <div className="fixed bottom-0 left-0 right-0 p-6 z-50">
-        <motion.div 
+        <motion.div
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           className="max-w-4xl mx-auto luxury-card p-6"
         >
-          <motion.button
-            whileHover={isValid ? { scale: 1.02 } : {}}
-            whileTap={isValid ? { scale: 0.98 } : {}}
-            onClick={handleSubmit}
-            disabled={!isValid || isSubmitting}
-            className={`w-full btn-luxury py-5 text-lg ${
-              isValid && !isSubmitting ? 'opacity-100' : 'opacity-40 grayscale cursor-not-allowed'
-            }`}
-          >
-            {isSubmitting ? (
+        <AnimatePresence mode="wait">
+          {isReviewing ? (
+              <motion.div
+                key="confirm"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="space-y-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className={`w-full btn-luxury py-5 text-lg ${!isSubmitting ? 'opacity-100' : 'opacity-40 grayscale cursor-not-allowed'
+                    }`}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <span>جاري المعالجة...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-3">
+                      <span>تأكيد الطلب الآن</span>
+                      <Check className="w-5 h-5" />
+                    </div>
+                  )}
+                </motion.button>
+                <motion.button
+                  onClick={() => setIsReviewing(false)}
+                  className="w-full text-center text-sm font-bold text-[#c07446] hover:underline"
+                >
+                  تعديل الطلب
+                </motion.button>
+              </motion.div>
+          ) : (
+            <motion.button
+              key="review"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              whileHover={isValid ? { scale: 1.02 } : {}}
+              whileTap={isValid ? { scale: 0.98 } : {}}
+              onClick={handleReview}
+              disabled={!isValid || isSubmitting}
+              className={`w-full btn-luxury py-5 text-lg ${
+                isValid && !isSubmitting ? 'opacity-100' : 'opacity-40 grayscale cursor-not-allowed'
+              }`}
+            >
               <div className="flex items-center gap-3">
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>جاري المعالجة...</span>
+                <span>مراجعة الطلب</span>
+                <ArrowLeft className="w-5 h-5" />
               </div>
-            ) : (
-              <div className="flex items-center gap-3">
-                <span>تأكيد الطلب الآن</span>
-                <Check className="w-5 h-5" />
-              </div>
-            )}
-          </motion.button>
+            </motion.button>
+          )}
+        </AnimatePresence>
         </motion.div>
       </div>
     </div>
